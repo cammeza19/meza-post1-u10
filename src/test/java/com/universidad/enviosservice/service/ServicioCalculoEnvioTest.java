@@ -39,4 +39,11 @@ class ServicioCalculoEnvioTest {
         assertThrows(IllegalArgumentException.class,
             () -> servicio.calcularCosto("DRON", 3.0, 100.0, "REGULAR", false));
     }
+
+    @Test
+    void combinaRecargoFragilYDescuentoCorporativoEnOrden() {
+        // Primero fragilidad y luego descuento: 50.0 * 1.15 * 0.85 = 48.875
+        double costo = servicio.calcularCosto("ESTANDAR", 3.0, 100.0, "CORPORATIVO", true);
+        assertEquals(48.875, costo, 0.01);
+    }
 }
