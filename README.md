@@ -149,11 +149,17 @@ Los valores esperados se calcularon a mano desde las fórmulas originales (el c�
 
 **Quality Gate "Estándar Laboratorio"** (asignado en *Project Settings → Quality Gate*):
 
-| Condición | Umbral | Qué controla |
-|---|---|---|
-| Coverage | < 70% → falla | Cobertura mínima del código |
-| New Code Smells / New Issues | > 0 → falla | Bloquea cualquier método nuevo o modificado con CC > 10 (vía S1541) u otro issue del perfil |
-| Duplicated Lines (%) | > 5% → falla | Duplicación máxima |
+Todas las condiciones aplican sobre **código nuevo** (*Conditions on New Code*), como muestra la captura:
+
+| Condición | Falla si | Origen | Qué controla |
+|---|---|---|---|
+| Coverage | < 70% | Exigida por la guía | Cobertura mínima del código nuevo |
+| Issues (equivale a *New Code Smells*) | > 0 | Exigida por la guía | Bloquea cualquier método nuevo o modificado con CC > 10 (vía S1541) u otro issue del perfil |
+| Duplicated Lines (%) | > 5% | Exigida por la guía | Duplicación máxima |
+| Maintainability Issues | > 0 | Heredada de las recomendadas por Sonar | Refuerza la condición de Issues para problemas de mantenibilidad (incluida S1541) |
+| Security Hotspots Reviewed | < 100% | Heredada de las recomendadas por Sonar | No afecta el resultado: el proyecto tiene 0 hotspots |
+
+Se conservaron las dos condiciones recomendadas por Sonar porque no contradicen las tres de la guía y la interfaz indica que el gate cumple "all of the conditions recommended by Sonar".
 
 SonarQube no permite una condición de Quality Gate "CC por método": las condiciones operan sobre métricas agregadas. Por eso el límite por método vive en el Quality Profile (S1541) y el Quality Gate lo hace cumplir indirectamente con "New Issues > 0".
 
@@ -184,7 +190,7 @@ SonarQube no permite una condición de Quality Gate "CC por método": las condic
 
 ## Resultado del Quality Gate: Failed (condición identificada)
 
-El segundo análisis cumple 2 de las 3 condiciones del Quality Gate "Estándar Laboratorio":
+El segundo análisis cumple todas las condiciones del Quality Gate "Estándar Laboratorio" excepto una (la captura final muestra "1 condition failed"):
 
 - **Coverage:** 100% ≥ 70%.
 - **New Issues:** 0. Ningún método supera CC = 10 (orquestador 5, estrategias 4), así que S1541 no reporta nada.
